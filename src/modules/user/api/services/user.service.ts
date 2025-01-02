@@ -63,6 +63,15 @@ export class UserService {
     return UserTransformer.fromDto(data)
   }
 
+  static async getMe(): Promise<User> {
+    const data = await httpClient.get({
+      responseSchema: userDtoSchema,
+      url: `/users/me`,
+    })
+
+    return UserTransformer.fromDto(data)
+  }
+
   static async update(userUuid: UserUuid, form: UserUpdateForm): Promise<User> {
     const data = await httpClient.post({
       body: UserUpdateTransformer.toDto(form),

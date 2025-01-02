@@ -10,10 +10,12 @@ import { useI18n } from 'vue-i18n'
 import AppGroup from '@/components/app/AppGroup.vue'
 import FormFieldset from '@/components/form/FormFieldset.vue'
 import { useKeyboardShortcutVisibilityValue } from '@/composables/keyboard-shortcut-visibility/keyboardShortcutVisibility.composable'
+import { usePreferences } from '@/composables/preference/preferences.composable.ts'
 
 const { t } = useI18n()
 const value = useKeyboardShortcutVisibilityValue()
 const isKeyboardShortcutHintVisible = useKeyboardShortcutVisibilityValue()
+const preferences = usePreferences()
 
 const computedValue = computed<boolean>({
   get: () => value.value,
@@ -37,6 +39,12 @@ const description = computed<string>(() => {
 
   return t('module.setting.keyboard_shortcuts.disabled.description')
 })
+
+function onUpdateModelValue(newValue: boolean): void {
+  preferences.update({
+    showShortcuts: newValue,
+  })
+}
 </script>
 
 <template>
@@ -52,6 +60,7 @@ const description = computed<string>(() => {
         v-model="computedValue"
         :label="label"
         :hint="description"
+        @update:model-value="onUpdateModelValue"
       />
 
       <VcButton

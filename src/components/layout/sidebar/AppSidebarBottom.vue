@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import AppSeparator from '@/components/app/AppSeparator.vue'
 import AppSidebarUserProfile from '@/components/layout/sidebar/AppSidebarUserProfile.vue'
-import type { AuthUser } from '@/models/auth-user/authUser.model'
+import type { User } from '@/models/user/detail/user.model.ts'
 
 const props = defineProps<{
   isCollapsed: boolean
-  authUser: AuthUser
   sidebarItemHeightInRem: number
+  user: User
 }>()
 
 const emit = defineEmits<{
@@ -25,7 +25,7 @@ function onSignOut(): void {
     <AppSidebarUserProfile
       :is-collapsed="props.isCollapsed"
       :sidebar-item-height-in-rem="props.sidebarItemHeightInRem"
-      :auth-user="props.authUser"
+      :user="props.user"
       @sign-out="onSignOut"
     />
   </div>

@@ -4,8 +4,9 @@ import { userUuidSchema } from '@/models/user/userUuid.model'
 
 export const userDtoSchema = z.object({
   uuid: userUuidSchema,
-  firstName: z.string(),
-  lastName: z.string(),
+  email: z.string().email().nullable(),
+  firstName: z.string().nullable(),
+  lastName: z.string().nullable(),
 })
 
 export type UserDto = z.infer<typeof userDtoSchema>

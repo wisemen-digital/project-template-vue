@@ -6,15 +6,15 @@
       "localStorage": [
         {
           "name": "lang",
-          "value": "nl-BE"
+          "value": "en-US"
         },
         {
           "name": "theme",
-          "value": "system"
+          "value": "light"
         },
         {
           "name": "tokens",
-          "value": "{\"access_token\":\"access_token\",\"expires_in\":43199,\"id_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzU2ODYwMDAwMDB9.gRtkapar9cJYhG8gLo-b2D_OzJtzf0XNonHs101xA44\",\"refresh_token\":\"refresh_token\",\"token_type\":\"Bearer\"}"
+          "value": "{\"access_token\":\"access_token\",\"expires_in\":43199,\"id_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjcyMjIwMDAwMDB9.awuAePNwRlYxo6-1Hda-jlg_zbeUPImYvJ93Hs3q-7E\",\"refresh_token\":\"refresh_token\",\"token_type\":\"Bearer\"}"
         },
         {
           "name": "fontSize",

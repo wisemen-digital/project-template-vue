@@ -37,6 +37,7 @@ export class UserTransformer {
   static fromDto(dto: UserDto): User {
     return {
       uuid: dto.uuid,
+      email: dto.email,
       firstName: dto.firstName,
       fullName: `${dto.firstName} ${dto.lastName}`,
       lastName: dto.lastName,
@@ -63,8 +64,8 @@ export class UserUpdateTransformer {
 
   static toForm(user: User): UserUpdateForm {
     return {
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user.firstName ?? '',
+      lastName: user.lastName ?? '',
     }
   }
 }

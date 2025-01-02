@@ -6,6 +6,9 @@ import type { UserUuid } from '@/models/user/userUuid.model'
 
 interface ProjectQueryKeys {
   permissions: void
+  preference: {
+    userUuid: ComputedRef<string | null>
+  }
   roles: void
   userDetail: {
     userUuid: ComputedRef<UserUuid>

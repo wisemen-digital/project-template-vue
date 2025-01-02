@@ -26,11 +26,11 @@ export class SettingRoleService {
 
   static async getAll(): Promise<Role[]> {
     const dto = await httpClient.get({
-      responseSchema: roleDtoSchema.array(),
+      responseSchema: z.object({ items: roleDtoSchema.array() }),
       url: '/roles',
     })
 
-    return dto.map(RoleTransformer.fromDto)
+    return dto.items.map(RoleTransformer.fromDto)
   }
 
   static async updateRolesInBulk(roles: Role[]): Promise<void> {

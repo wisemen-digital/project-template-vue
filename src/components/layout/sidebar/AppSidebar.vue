@@ -7,7 +7,7 @@ import AppSidebarCollapseToggle from '@/components/layout/sidebar/AppSidebarColl
 import AppSidebarTop from '@/components/layout/sidebar/AppSidebarTop.vue'
 import AppSidebarNavMenu from '@/components/layout/sidebar/navigation/AppSidebarNavMenu.vue'
 import { onCreated } from '@/composables/created/created.composable'
-import type { AuthUser } from '@/models/auth-user/authUser.model'
+import type { User } from '@/models/user/detail/user.model.ts'
 import type {
   NavigationGroup,
   NavigationItem,
@@ -15,9 +15,9 @@ import type {
 import { CssUnitUtil } from '@/utils/cssUnit.util'
 
 const props = withDefaults(defineProps<{
-  authUser: AuthUser
   bottomItems?: NavigationItem[]
   mainItems: NavigationGroup[]
+  user: User
   variant: 'fixed-sidebar' | 'floating-content' | 'floating-sidebar'
 }>(), {
   bottomItems: () => [],
@@ -102,7 +102,7 @@ onCreated(() => {
         <AppSidebarBottom
           :is-collapsed="isSidebarCollapsed"
           :sidebar-item-height-in-rem="sidebarItemHeightInRem"
-          :auth-user="props.authUser"
+          :user="props.user"
           @sign-out="onSignOut"
         />
       </div>

@@ -10,38 +10,39 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import FormFieldset from '@/components/form/FormFieldset.vue'
+import { usePreferences } from '@/composables/preference/preferences.composable.ts'
 import { useTheme } from '@/composables/theme/theme.composable'
+import { PreferenceTheme } from '@/models/preference/preferenceTheme.enum.ts'
 import SettingApplicationOverviewMiniDashboard from '@/modules/settings/features/application/components/interface-theme/SettingApplicationOverviewMiniDashboard.vue'
-
-type ThemeValue = 'dark' | 'light' | 'system'
 
 const { t } = useI18n()
 const darkMode = useDarkMode()
 const theme = useTheme()
+const preferences = usePreferences()
 
-const themes = computed<RadioGroupItem<ThemeValue>[]>(() => [
+const themes = computed<RadioGroupItem<PreferenceTheme>[]>(() => [
   {
     label: t('module.setting.interface_theme.light'),
-    value: 'light',
+    value: PreferenceTheme.LIGHT,
   },
   {
     label: t('module.setting.interface_theme.dark'),
-    value: 'dark',
+    value: PreferenceTheme.DARK,
   },
   {
     label: t('module.setting.interface_theme.system_preference'),
-    value: 'system',
+    value: PreferenceTheme.SYSTEM,
   },
 ])
 
-const value = computed<'dark' | 'light' | 'system'>({
-  get: () => darkMode.value.value,
-  set: (value) => {
+const value = computed<PreferenceTheme>({
+  get: () => darkMode.value.value as PreferenceTheme,
+  set: (value: PreferenceTheme) => {
     darkMode.value.value = value
   },
 })
 
-function getIsDarkModeEnabled(value: 'dark' | 'light' | 'system'): boolean {
+function getIsDarkModeEnabled(value: PreferenceTheme): boolean {
   if (value === 'dark') {
     return true
   }
@@ -51,6 +52,16 @@ function getIsDarkModeEnabled(value: 'dark' | 'light' | 'system'): boolean {
   }
 
   return darkMode.isSystemDarkMode.value
+}
+
+function onUpdateModelValue(newValue: PreferenceTheme | null): void {
+  if (newValue === null) {
+    return
+  }
+
+  preferences.update({
+    theme: newValue,
+  })
 }
 </script>
 
@@ -62,6 +73,7 @@ function getIsDarkModeEnabled(value: 'dark' | 'light' | 'system'): boolean {
     <VcRadioGroup
       v-model="value"
       :items="themes"
+      @update:model-value="onUpdateModelValue"
     >
       <template #items="{ items }">
         <div class="grid gap-lg lg:grid-cols-3">

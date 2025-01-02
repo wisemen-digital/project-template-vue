@@ -5,8 +5,9 @@ import {
 } from 'vue'
 
 import { oAuthClient } from '@/libs/oAuth.lib.ts'
-import { AuthUserTransformer } from '@/models/auth-user/auth.transformer'
-import type { AuthUser } from '@/models/auth-user/authUser.model'
+import type { User } from '@/models/user/detail/user.model.ts'
+import type { UserSubject } from '@/models/user/userSubject.model.ts'
+import { UserService } from '@/modules/user/api/services/user.service.ts'
 
 async function getLoginUrl(): Promise<string> {
   return await oAuthClient.getLoginUrl()
@@ -25,30 +26,32 @@ async function isLoggedIn(): Promise<boolean> {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  const authUser = ref<AuthUser | null>(null)
+  const authUser = ref<User | null>(null)
+  const authUserSubject = ref<UserSubject | null>(null)
 
   const isAuthenticated = computed<boolean>(() => authUser.value === null)
 
   const logoutCallback = ref<(() => void) | null>(null)
 
-  async function getAuthUser(): Promise<AuthUser> {
+  async function getAuthUser(): Promise<User> {
     if (authUser.value !== null) {
       return authUser.value
     }
 
-    const user = await oAuthClient.getUserInfo()
+    const user = await UserService.getMe()
 
-    authUser.value = AuthUserTransformer.fromDto(user)
+    setAuthUser(user)
 
-    return authUser.value
+    return user
   }
 
-  function setAuthUser(user: AuthUser | null): void {
+  function setAuthUser(user: User | null): void {
     authUser.value = user
   }
 
   function logout(): void {
     oAuthClient.logout()
+    authUserSubject.value = null
     setAuthUser(null)
     logoutCallback.value?.()
   }

@@ -5,10 +5,11 @@ import { useI18n } from 'vue-i18n'
 
 import FormFieldset from '@/components/form/FormFieldset.vue'
 import { useHighContrastModeValue } from '@/composables/high-contrast-mode/highContrastMode.composable'
+import { usePreferences } from '@/composables/preference/preferences.composable.ts'
 
 const { t } = useI18n()
 const isHighContrastModeEnabled = useHighContrastModeValue()
-
+const preference = usePreferences()
 const label = computed<string>(() => {
   if (isHighContrastModeEnabled.value) {
     return t('module.setting.high_contrast.enabled.label')
@@ -24,6 +25,12 @@ const description = computed<string>(() => {
 
   return t('module.setting.high_contrast.disabled.description')
 })
+
+function onUpdateModelValue(value: boolean): void {
+  preference.update({
+    highContrast: value,
+  })
+}
 </script>
 
 <template>
@@ -35,6 +42,7 @@ const description = computed<string>(() => {
       v-model="isHighContrastModeEnabled"
       :label="label"
       :hint="description"
+      @update:model-value="onUpdateModelValue"
     />
   </FormFieldset>
 </template>

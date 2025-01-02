@@ -7,10 +7,9 @@ import {
   watch,
 } from 'vue'
 
+import type { FontSize } from '@/models/preference/fontSize.model.ts'
 import { i18nPlugin } from '@/plugins/i18n/i18n.plugin'
 import { createI18nKeyMap } from '@/types/enum.type'
-
-type FontSize = 'default' | 'large' | 'larger' | 'small' | 'smaller'
 
 interface UseFontSizeReturnType {
   displayFn: (value: FontSize) => string

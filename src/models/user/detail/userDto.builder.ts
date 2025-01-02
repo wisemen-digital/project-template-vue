@@ -5,6 +5,7 @@ import { UuidUtil } from '@/utils/uuid.util.ts'
 export class UserDtoBuilder {
   value: UserDto = {
     uuid: UuidUtil.getRandom<UserUuid>(),
+    email: 'john.doe@jhonny.com',
     firstName: 'John',
     lastName: 'Doe',
   }
@@ -13,6 +14,12 @@ export class UserDtoBuilder {
 
   build(): UserDto {
     return this.value
+  }
+
+  withEmail(email: string): UserDtoBuilder {
+    this.value.email = email
+
+    return this
   }
 
   withFirstName(firstName: string): UserDtoBuilder {
