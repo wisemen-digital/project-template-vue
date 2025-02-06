@@ -12,6 +12,24 @@ export const TEST_ID = {
       SUBMIT_BUTTON: 'login-form-submit-button',
     },
   },
+  SETTINGS: {
+    ROLES: {
+      CREATE_DIALOG: 'settings-roles-create-dialog',
+      FORM: {
+        NAME_INPUT: 'settings-roles-form-name-input',
+        SUBMIT_BUTTON: 'settings-roles-form-submit-button',
+      },
+      OVERVIEW: {
+        CREATE_BUTTON: 'settings-roles-overview-create-button',
+        TABLE: {
+          PERMISSION_ACTION: 'settings-roles-overview-table-permission-action',
+          PERMISSION_ID: 'settings-roles-overview-table-permission-id',
+          ROLE_NAME: 'settings-roles-overview-table-role-name',
+          TAB_TOGGLE: 'settings-roles-overview-table-tab-toggle',
+        },
+      },
+    },
+  },
   SHARED: {
     MALFORMED_RESPONSE_TOAST: 'shared-malformed-response-toast',
   },

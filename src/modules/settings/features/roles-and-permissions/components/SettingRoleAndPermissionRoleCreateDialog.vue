@@ -11,6 +11,7 @@ import AppDialogHeader from '@/components/app/dialog/AppDialogHeader.vue'
 import AppForm from '@/components/form/AppForm.vue'
 import FormSubmitButton from '@/components/form/FormSubmitButton.vue'
 import { useApiErrorToast } from '@/composables/api-error-toast/apiErrorToast.composable.ts'
+import { TEST_ID } from '@/constants/testId.constant'
 import { toFormField } from '@/helpers/formango.helper'
 import { useSettingRoleCreateMutation } from '@/modules/settings/api/mutations/settingRoleCreate.mutation.ts'
 
@@ -52,6 +53,7 @@ function onClose(): void {
     @close="onClose"
   >
     <AppDialogContent
+      :data-test-id="TEST_ID.SETTINGS.ROLES.CREATE_DIALOG"
       class="w-dialog-sm"
     >
       <AppDialogHeader
@@ -61,12 +63,14 @@ function onClose(): void {
       <div class="py-4">
         <AppForm :form="form">
           <VcTextField
+            :test-id="TEST_ID.SETTINGS.ROLES.FORM.NAME_INPUT"
             :label="t('user.name')"
             v-bind="toFormField(name)"
           />
           <AppDialogActions>
             <AppDialogActionCancel :label="t('shared.cancel')" />
             <FormSubmitButton
+              :data-test-id="TEST_ID.SETTINGS.ROLES.FORM.SUBMIT_BUTTON"
               :form="form"
               :label="t('shared.save')"
             />

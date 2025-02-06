@@ -11,6 +11,7 @@ import AppVerticalFormElementSpacer from '@/components/app/AppVerticalFormElemen
 import AppTeleport from '@/components/app/teleport/AppTeleport.vue'
 import { useApiErrorToast } from '@/composables/api-error-toast/apiErrorToast.composable'
 import { useUnsavedChanges } from '@/composables/unsaved-changes/unsavedChanges.composable'
+import { TEST_ID } from '@/constants/testId.constant'
 import type { SettingPermission } from '@/models/permission/permission.model'
 import type { SettingRole } from '@/models/setting-role/role.model'
 import type { RoleUuid } from '@/models/setting-role/roleUuid.model'
@@ -103,6 +104,7 @@ useUnsavedChanges(isRolesModelMapChanged)
   <AppVerticalFormElementSpacer>
     <AppTeleport to="headerActions">
       <VcButton
+        :data-test-id="TEST_ID.SETTINGS.ROLES.OVERVIEW.CREATE_BUTTON"
         icon-left="plus"
         @click="onAddNewRoleButtonClick"
       >

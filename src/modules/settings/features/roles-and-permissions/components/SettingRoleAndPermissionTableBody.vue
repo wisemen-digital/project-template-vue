@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 import AppHeightTransition from '@/components/app/AppHeightTransition.vue'
 import AppUnstyledButton from '@/components/app/button/AppUnstyledButton.vue'
+import { TEST_ID } from '@/constants/testId.constant'
 import type { SettingPermission } from '@/models/permission/permission.model.ts'
 import type { SettingPermissionAction } from '@/models/permission/permissionAction.model.ts'
 import type { SettingPermissionId } from '@/models/permission/permissionId.model.ts'
@@ -119,6 +120,7 @@ function onUpdateActionCheckbox(
     >
       <Component
         :is="permission.actions ? AppUnstyledButton : 'div'"
+        :data-test-id="TEST_ID.SETTINGS.ROLES.OVERVIEW.TABLE.PERMISSION_ID"
         class="sticky left-0 flex items-center justify-between border-r border-solid border-secondary bg-primary p-3 px-6 text-left !ring-offset-0"
         @click="onTogglePermissionActionsClick(permission.id)"
       >
@@ -126,6 +128,7 @@ function onUpdateActionCheckbox(
 
         <VcIcon
           v-if="permission.actions"
+          :data-test-id="TEST_ID.SETTINGS.ROLES.OVERVIEW.TABLE.TAB_TOGGLE"
           :icon="isPermissionTabOpen(permission.id) ? 'chevronUp' : 'chevronDown'"
           class="size-4"
         />
@@ -164,7 +167,7 @@ function onUpdateActionCheckbox(
               icon="bottomLeftCorner"
               class="mt-0.5 size-3 text-quaternary opacity-0"
             />
-            <span>
+            <span :data-test-id="TEST_ID.SETTINGS.ROLES.OVERVIEW.TABLE.PERMISSION_ACTION">
               {{ action }}
             </span>
           </div>

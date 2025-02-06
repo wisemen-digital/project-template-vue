@@ -129,7 +129,7 @@
   --text-tertiary: var(--gray-400);
   --text-tertiary-hover: var(--gray-300);
   --text-tertiary-on-brand: var(--gray-400);
-  --text-quaternary: var(--gray-400);
+  --text-quaternary: var(--gray-500);
   --text-quaternary-on-brand: var(--gray-400);
   --text-white: var(--gray-50);
   --text-disabled: var(--gray-500);
