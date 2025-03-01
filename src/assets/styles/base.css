@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply font-sans flex flex-col min-h-dvh bg-primary;
+    @apply font-sans flex flex-col h-dvh bg-primary overflow-hidden;
   }
 
   #app {

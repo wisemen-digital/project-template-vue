@@ -4,9 +4,9 @@ import {
   provide,
 } from 'vue'
 
-import { assert } from '@/helpers/assert.helper'
+import { assert } from '@/utils/assert.util'
 
-interface BaseFieldsetContext {
+export interface BaseFieldsetContext {
   id: string
 }
 

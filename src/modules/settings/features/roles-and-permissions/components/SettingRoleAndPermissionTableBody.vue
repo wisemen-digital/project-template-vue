@@ -11,6 +11,7 @@ import type { SettingRole } from '@/models/setting-role/role.model.ts'
 import type { RoleUuid } from '@/models/setting-role/roleUuid.model.ts'
 
 const props = defineProps<{
+  isTableScrollable: boolean
   isTableScrolledToBottom: boolean
   permissions: SettingPermission[]
   roles: SettingRole[]
@@ -110,24 +111,24 @@ function onUpdateActionCheckbox(
     v-for="permission of props.permissions"
     :key="permission.id"
     :class="{
-      'last:border-b-transparent': props.isTableScrolledToBottom,
+      'last:border-b-0': props.isTableScrolledToBottom || !props.isTableScrollable,
     }"
     class="col-span-full grid grid-cols-subgrid border-b border-solid border-secondary"
   >
-    <div
-      class="z-2 col-span-full grid grid-cols-subgrid"
-    >
+    <div class="z-2 col-span-full grid grid-cols-subgrid">
       <Component
         :is="permission.actions ? AppUnstyledButton : 'div'"
         class="sticky left-0 flex items-center uppercase text-sm justify-between border-r border-solid border-secondary bg-primary p-3 px-6 text-left !ring-offset-0"
         @click="onTogglePermissionActionsClick(permission.id)"
       >
-        {{ permission.id }}
+        <span class="text-sm text-primary font-medium">
+          {{ permission.id }}
+        </span>
 
         <VcIcon
           v-if="permission.actions"
           :icon="isPermissionTabOpen(permission.id) ? 'chevronUp' : 'chevronDown'"
-          class="size-4"
+          class="size-4 text-secondary"
         />
       </Component>
 
@@ -144,27 +145,25 @@ function onUpdateActionCheckbox(
       </div>
     </div>
 
-    <AppHeightTransition
-      :duration="0.3"
-    >
+    <AppHeightTransition :duration="0.3">
       <div
         v-if="isPermissionTabOpen(permission.id)"
         class="col-span-full grid grid-cols-subgrid items-start"
       >
         <div
-          v-for="(action, index) in permission.actions"
+          v-for="(action, actionIndex) in permission.actions"
           :key="action"
           class="col-span-full grid grid-cols-subgrid border-b border-secondary first:border-t last:border-b-0"
         >
           <div class="sticky left-0 flex gap-2 border-r border-secondary bg-secondary p-3 pl-10 text-secondary">
             <VcIcon
               :class="{
-                'opacity-100': index === 0,
+                'opacity-100': actionIndex === 0,
               }"
               icon="bottomLeftCorner"
               class="mt-0.5 size-3 text-quaternary opacity-0"
             />
-            <span>
+            <span class="text-sm text-secondary">
               {{ action }}
             </span>
           </div>

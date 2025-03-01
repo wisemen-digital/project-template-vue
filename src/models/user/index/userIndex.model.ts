@@ -4,6 +4,5 @@ export interface UserIndex {
   uuid: UserUuid
   email: string
   firstName: string | null
-  fullName: string | null
   lastName: string | null
 }

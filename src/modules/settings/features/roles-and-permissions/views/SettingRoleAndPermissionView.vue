@@ -28,7 +28,7 @@ const props = defineProps<{
   roles: SettingRole[]
 }>()
 
-const i18n = useI18n()
+const { t } = useI18n()
 const apiErrorToast = useApiErrorToast()
 const toast = useToast()
 
@@ -82,7 +82,7 @@ async function onSaveChangesButtonClick(): Promise<void> {
     })
 
     toast.success({
-      message: i18n.t('module.setting.roles_and_permissions.save_changes_success'),
+      message: t('module.setting.roles_and_permissions.save_changes_success'),
     })
 
     resetRolesModelMapSnapshot()
@@ -106,7 +106,7 @@ useUnsavedChanges(isRolesModelMapChanged)
         icon-left="plus"
         @click="onAddNewRoleButtonClick"
       >
-        {{ i18n.t('module.setting.roles_and_permissions.add_new_role') }}
+        {{ t('module.setting.roles_and_permissions.add_new_role') }}
       </VcButton>
     </AppTeleport>
     <SettingRoleAndPermissionTable
@@ -118,9 +118,10 @@ useUnsavedChanges(isRolesModelMapChanged)
     <div class="flex justify-end">
       <VcButton
         :is-disabled="!isRolesModelMapChanged"
+        :is-loading="settingsRolesBulkUpdateMutation.isLoading.value"
         @click="onSaveChangesButtonClick"
       >
-        {{ i18n.t('module.setting.roles_and_permissions.save_changes') }}
+        {{ t('module.setting.roles_and_permissions.save_changes') }}
       </VcButton>
     </div>
   </AppVerticalFormElementSpacer>

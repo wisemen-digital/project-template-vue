@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import {
   type Pagination,
   VcIconButton,
@@ -13,13 +13,12 @@ import {
 import { useI18n } from 'vue-i18n'
 
 import { useKeyboardShortcutVisibilityValue } from '@/composables/keyboard-shortcut-visibility/keyboardShortcutVisibility.composable'
-import { KEYBOARD_SHORTCUT } from '@/constants/keyboardShortcut.constant'
 
 const props = withDefaults(defineProps<{
   isDisabled?: boolean
   isLoading: boolean
   disableKeyboardCommand?: boolean
-  pagination: Pagination<unknown>
+  pagination: Pagination<T>
   placeholder?: string | null
 }>(), {
   isDisabled: false,
@@ -54,7 +53,13 @@ function onClearInput(): void {
 
 <template>
   <VcKeyboardShortcutProvider
-    :config="KEYBOARD_SHORTCUT.SEARCH"
+    :config="{
+      keys: [
+        'meta',
+        'f',
+      ],
+      preventDefault: true,
+    }"
     class="w-64"
   >
     <VcTextField
@@ -69,7 +74,7 @@ function onClearInput(): void {
         <div>
           <VcKeyboardShortcut
             v-if="(search === null || search === '') && !props.disableKeyboardCommand && isKeyboardShortcutHintVisible"
-            :keyboard-keys="KEYBOARD_SHORTCUT.SEARCH.keys"
+            :keyboard-keys="['meta', 'f']"
             keyboard-classes="border-primary text-tertiary"
             class="mr-md"
           />

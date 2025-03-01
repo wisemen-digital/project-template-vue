@@ -3,7 +3,7 @@ import { z } from 'zod'
 import {
   createRoleControllerCreateRoleV1,
   deleteRoleControllerDeleteRoleV1,
-  updateRolesBulkControllerUpdateRolesBulkV1,
+  updateRolesPermissionsControllerUpdateRolePermissionsV1,
   viewRolesControllerGetRolesV1,
 } from '@/client'
 import type { SettingRole } from '@/models/setting-role/role.model.ts'
@@ -48,7 +48,7 @@ export class SettingRoleService {
   }
 
   static async updateRolesInBulk(form: SettingRoleBulkUpdateForm): Promise<void> {
-    await updateRolesBulkControllerUpdateRolesBulkV1({
+    await updateRolesPermissionsControllerUpdateRolePermissionsV1({
       body: SettingRoleBulkUpdateTransformer.toDto(form),
     })
   }

@@ -6,21 +6,21 @@ import {
   VcRadioGroupItem,
   VcThemeProvider,
 } from '@wisemen/vue-core'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import { Theme } from '@/client'
 import FormFieldset from '@/components/form/FormFieldset.vue'
-import { usePreferences } from '@/composables/preference/preferences.composable.ts'
+import { usePreferences } from '@/composables/preference/preferences.composable'
 import { useTheme } from '@/composables/theme/theme.composable'
 import SettingApplicationOverviewMiniDashboard from '@/modules/settings/features/application/components/interface-theme/SettingApplicationOverviewMiniDashboard.vue'
 
 const i18n = useI18n()
 const darkMode = useDarkMode()
-const theme = useTheme()
 const preferences = usePreferences()
+const theme = useTheme()
 
-const themes = computed<RadioGroupItem<Theme>[]>(() => [
+const appearances = computed<RadioGroupItem<Theme>[]>(() => [
   {
     label: i18n.t('module.setting.interface_theme.light'),
     value: Theme.LIGHT,
@@ -35,34 +35,11 @@ const themes = computed<RadioGroupItem<Theme>[]>(() => [
   },
 ])
 
-const value = computed<Theme>({
-  get: () => darkMode.value.value as Theme,
-  set: (value: Theme) => {
-    darkMode.value.value = value
-  },
-})
-
-function getIsDarkModeEnabled(value: Theme): boolean {
-  if (value === 'dark') {
-    return true
-  }
-
-  if (value === 'light') {
-    return false
-  }
-
-  return darkMode.isSystemDarkMode.value
-}
-
-function onUpdateModelValue(newValue: Theme | null): void {
-  if (newValue === null) {
-    return
-  }
-
+watch(darkMode, () => {
   preferences.update({
-    theme: newValue,
+    theme: darkMode.value as Theme,
   })
-}
+})
 </script>
 
 <template>
@@ -70,20 +47,16 @@ function onUpdateModelValue(newValue: Theme | null): void {
     :title="i18n.t('module.setting.interface_theme.title')"
     :description="i18n.t('module.setting.interface_theme.description')"
   >
-    <VcRadioGroup
-      v-model="value"
-      @update:model-value="onUpdateModelValue"
-    >
+    <VcRadioGroup v-model="darkMode">
       <div class="grid gap-lg lg:grid-cols-3">
         <VcRadioGroupItem
-          v-for="item of themes"
+          v-for="item of appearances"
           :key="item.value"
           :value="item.value"
-          :item="item"
           class="group rounded-xl text-left !ring-0 !ring-offset-0"
         >
           <VcThemeProvider
-            :is-dark-mode-enabled="getIsDarkModeEnabled(item.value)"
+            :appearance="item.value"
             :theme="theme"
           >
             <div class="relative h-40 overflow-hidden rounded-xl border-2 border-solid border-transparent bg-tertiary ring-brand-primary-500 ring-offset-1 duration-200 group-focus-visible:ring-2 group-data-[state=checked]:border-brand">

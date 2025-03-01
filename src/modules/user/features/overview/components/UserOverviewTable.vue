@@ -4,7 +4,7 @@ import type {
   Pagination,
   TableColumn,
 } from '@wisemen/vue-core'
-import { VcTable, VcTableCell } from '@wisemen/vue-core'
+import { VcTable } from '@wisemen/vue-core'
 import {
   computed,
   h,
@@ -16,8 +16,7 @@ import AppErrorState from '@/components/app/error-state/AppErrorState.vue'
 import { TEST_ID } from '@/constants/testId.constant.ts'
 import type { UserIndex } from '@/models/user/index/userIndex.model.ts'
 import type { UserIndexFilters } from '@/models/user/index/userIndexFilters.model.ts'
-import UserOverviewTableNameCell from '@/modules/user/features/overview/components/UserOverviewTableNameCell.vue'
-import { DateFormatUtil } from '@/utils/date.util.ts'
+import UserOverviewTableEmailCell from '@/modules/user/features/overview/components/UserOverviewTableEmailCell.vue'
 
 const props = defineProps<{
   isLoading: boolean
@@ -30,18 +29,11 @@ const i18n = useI18n()
 
 const columns = computed<TableColumn<UserIndex>[]>(() => [
   {
-    testId: TEST_ID.USERS.OVERVIEW.TABLE.FULL_NAME,
+    testId: TEST_ID.USERS.OVERVIEW.TABLE.EMAIL,
     isSortable: true,
-    cell: (user): VNode => h(UserOverviewTableNameCell, { user }),
-    headerLabel: i18n.t('user.name'),
+    cell: (user): VNode => h(UserOverviewTableEmailCell, { user }),
+    headerLabel: i18n.t('user.email'),
     key: 'name',
-  },
-  {
-    testId: TEST_ID.USERS.OVERVIEW.TABLE.BIRTH_DATE,
-    isSortable: true,
-    cell: (): VNode => h(VcTableCell, () => DateFormatUtil.toNumericDate(new Date())),
-    headerLabel: i18n.t('user.birth_date'),
-    key: 'birthDate',
   },
 ])
 </script>

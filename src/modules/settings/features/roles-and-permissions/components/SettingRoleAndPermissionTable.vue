@@ -29,10 +29,12 @@ const tableScrollContainerRef = ref<HTMLElement | null>(null)
 
 const scroll = useScroll(tableScrollContainerRef)
 
-const isTableScrolledToBottom = computed<boolean>(() => {
-  const canScroll = !scroll.arrivedState.bottom || !scroll.arrivedState.top
+const isTableScrollable = computed<boolean>(() => {
+  return !scroll.arrivedState.bottom || !scroll.arrivedState.top
+})
 
-  if (!canScroll) {
+const isTableScrolledToBottom = computed<boolean>(() => {
+  if (!isTableScrollable.value) {
     return false
   }
 
@@ -102,9 +104,7 @@ function onUpdateActionCheckbox(
 </script>
 
 <template>
-  <div
-    class="flex flex-1 flex-col overflow-hidden rounded-xl border border-solid border-secondary bg-primary"
-  >
+  <div class="flex flex-1 flex-col overflow-hidden rounded-xl border border-solid border-secondary bg-primary">
     <div
       ref="tableScrollContainerRef"
       :style="{
@@ -120,6 +120,7 @@ function onUpdateActionCheckbox(
       <SettingRoleAndPermissionTableBody
         :roles="props.roles"
         :roles-model-map="rolesModelMap"
+        :is-table-scrollable="isTableScrollable"
         :is-table-scrolled-to-bottom="isTableScrolledToBottom"
         :permissions="props.permissions"
         @update-permission-checkbox="onUpdatePermissionCheckbox"

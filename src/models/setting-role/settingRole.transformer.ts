@@ -1,3 +1,4 @@
+import type { Permission } from '@/client'
 import type { SettingPermissionAction } from '@/models/permission/permissionAction.model.ts'
 import type { SettingRole } from '@/models/setting-role/role.model.ts'
 import type { SettingRoleBulkUpdateDto } from '@/models/setting-role/settingRoleBulkUpdateDto.model.ts'
@@ -33,12 +34,12 @@ export class SettingRoleBulkUpdateTransformer {
 
     return {
       roles: roleArray.map((role) => ({
-        uuid: role.uuid,
-        name: role.name,
-        permissions: role.permissions.map((permission) => ({
-          id: permission.id,
-          actions: permission.actions ?? [],
-        })),
+        permissions: role.permissions.flatMap((permission): Permission[] => {
+          return permission.actions?.map((action) => {
+            return `${permission.id}.${action}` as Permission
+          }) ?? []
+        }),
+        roleUuid: role.uuid,
       })),
     }
   }

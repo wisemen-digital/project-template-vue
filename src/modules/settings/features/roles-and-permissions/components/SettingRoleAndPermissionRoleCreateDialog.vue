@@ -1,5 +1,8 @@
 <script  lang="ts" setup="">
-import { VcDialog, VcTextField } from '@wisemen/vue-core'
+import {
+  VcDialog,
+  VcTextField,
+} from '@wisemen/vue-core'
 import { useForm } from 'formango'
 import { useI18n } from 'vue-i18n'
 import { z } from 'zod'
@@ -11,8 +14,8 @@ import AppDialogHeader from '@/components/app/dialog/AppDialogHeader.vue'
 import AppForm from '@/components/form/AppForm.vue'
 import FormSubmitButton from '@/components/form/FormSubmitButton.vue'
 import { useApiErrorToast } from '@/composables/api-error-toast/apiErrorToast.composable.ts'
-import { toFormField } from '@/helpers/formango.helper'
 import { useSettingRoleCreateMutation } from '@/modules/settings/api/mutations/settingRoleCreate.mutation.ts'
+import { toFormField } from '@/utils/formango.util'
 
 const emit = defineEmits<{
   close: []
@@ -51,28 +54,31 @@ function onClose(): void {
   <VcDialog
     @close="onClose"
   >
-    <AppDialogContent
-      class="w-dialog-sm"
-    >
+    <AppDialogContent class="w-dialog-sm">
       <AppDialogHeader
         :title="i18n.t('module.setting.roles_and_permissions.create_role_dialog.title')"
         :description="i18n.t('module.setting.roles_and_permissions.create_role_dialog.description')"
       />
-      <div class="py-4">
-        <AppForm :form="form">
-          <VcTextField
-            :label="i18n.t('user.name')"
-            v-bind="toFormField(name)"
+
+      <AppForm
+        :form="form"
+        :can-exit-when-dirty="true"
+        class="mt-xl"
+      >
+        <VcTextField
+          :label="i18n.t('user.name')"
+          v-bind="toFormField(name)"
+        />
+
+        <AppDialogActions>
+          <AppDialogActionCancel :label="i18n.t('shared.cancel')" />
+
+          <FormSubmitButton
+            :form="form"
+            :label="i18n.t('shared.save')"
           />
-          <AppDialogActions>
-            <AppDialogActionCancel :label="i18n.t('shared.cancel')" />
-            <FormSubmitButton
-              :form="form"
-              :label="i18n.t('shared.save')"
-            />
-          </AppDialogActions>
-        </AppForm>
-      </div>
+        </AppDialogActions>
+      </AppForm>
     </AppDialogContent>
   </VcDialog>
 </template>

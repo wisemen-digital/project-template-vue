@@ -6,7 +6,7 @@ import { useI18n } from 'vue-i18n'
 import FormGrid from '@/components/app/grid/FormGrid.vue'
 import FormFieldset from '@/components/form/FormFieldset.vue'
 import { TEST_ID } from '@/constants/testId.constant.ts'
-import { toFormField } from '@/helpers/formango.helper'
+import { toFormField } from '@/utils/formango.util'
 
 const props = defineProps<{
   firstName: Field<string>

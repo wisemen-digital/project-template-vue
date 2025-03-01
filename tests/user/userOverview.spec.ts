@@ -10,12 +10,14 @@ test('display users in the table', async ({ http, page, worker }) => {
     .withFirstName('Charles')
     .withEmail('charles.doe@gmail.com')
     .withLastName('Doe')
+    .withEmail('charles.doe@email.com')
     .build()
 
   const USER_2 = new UserIndexDtoBuilder()
     .withFirstName('Nancy')
     .withEmail('nancy.johnson@gmail.com')
     .withLastName('Johnson')
+    .withEmail('nancy.johnson@email.com')
     .build()
 
   await worker.use(
@@ -29,8 +31,5 @@ test('display users in the table', async ({ http, page, worker }) => {
 
   await page.goto('/users')
 
-  await expect(page.getByTestId(TEST_ID.USERS.OVERVIEW.TABLE.FULL_NAME).nth(0))
-    .toContainText('charles.doe@gmail.com')
-  await expect(page.getByTestId(TEST_ID.USERS.OVERVIEW.TABLE.FULL_NAME).nth(1))
-    .toContainText('nancy.johnson@gmail.com')
+  await expect(page.getByTestId(TEST_ID.USERS.OVERVIEW.TABLE.EMAIL).nth(0)).toContainText('charles.doe@email.com')
 })

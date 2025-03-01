@@ -9,6 +9,7 @@ import {
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+import AppUnstyledButton from '@/components/app/button/AppUnstyledButton.vue'
 import { useKeyboardShortcutVisibilityValue } from '@/composables/keyboard-shortcut-visibility/keyboardShortcutVisibility.composable'
 
 const isCollapsed = defineModel<boolean>({
@@ -43,9 +44,9 @@ const toggleBtnLabel = computed<string>(() => {
       >
         <template #trigger>
           <VcToggle v-model="isCollapsed">
-            <button
+            <AppUnstyledButton
               :aria-label="toggleBtnLabel"
-              class="flex h-10 w-5 translate-x-1/2 items-center justify-center rounded-2xl border border-solid border-secondary bg-secondary text-fg-disabled opacity-0 outline-none ring-fg-tertiary ring-offset-1 duration-300 focus-visible:opacity-100 focus-visible:ring-2 group-hover/sidebar:opacity-100"
+              class="flex h-10 w-5 translate-x-1/2 items-center justify-center rounded-2xl border border-solid border-secondary bg-secondary text-fg-disabled opacity-0 outline-none ring-fg-tertiary focus-visible:opacity-100 group-hover/sidebar:opacity-100"
             >
               <VcIcon
                 :class="{
@@ -54,7 +55,7 @@ const toggleBtnLabel = computed<string>(() => {
                 class="duration-300"
                 icon="chevronLeft"
               />
-            </button>
+            </AppUnstyledButton>
           </VcToggle>
         </template>
 

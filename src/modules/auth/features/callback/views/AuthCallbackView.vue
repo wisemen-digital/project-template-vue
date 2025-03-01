@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 import { TEST_ID } from '@/constants/testId.constant.ts'
 import { useAuthStore } from '@/stores/auth.store.ts'
 
-const i18n = useI18n()
+const { t } = useI18n()
 const router = useRouter()
 const authStore = useAuthStore()
 const toast = useToast()
@@ -17,7 +17,7 @@ const authorizationCode = useRouteQuery<string | null>('code', null)
 onMounted(async () => {
   if (authorizationCode.value === null) {
     toast.error({
-      message: i18n.t('module.auth.login.error'),
+      message: t('module.auth.login.error'),
     })
 
     await router.push({

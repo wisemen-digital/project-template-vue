@@ -1,7 +1,7 @@
 import sign from 'jwt-encode'
 import { http, HttpResponse } from 'msw'
 
-import { UserDtoBuilder } from '@/models/user/detail/userDto.builder.ts'
+import { UserDetailDtoBuilder } from '@/models/user/detail/userDetailDto.builder'
 
 interface Token {
   exp: number
@@ -11,7 +11,7 @@ function encodeJwt(token: Token): string {
   return sign(token, 'secret')
 }
 
-const USER = new UserDtoBuilder().build()
+const USER = new UserDetailDtoBuilder().build()
 
 export const authHandlers = [
   http.post('*/oauth/v2/token', () => {

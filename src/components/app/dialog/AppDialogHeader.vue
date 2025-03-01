@@ -19,7 +19,7 @@ const props = defineProps<{
     </VcDialogTitle>
 
     <VcDialogDescription>
-      <p class="mt-xl text-secondary">
+      <p class="mt-sm text-secondary">
         {{ props.description }}
       </p>
     </VcDialogDescription>

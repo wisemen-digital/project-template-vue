@@ -5,12 +5,11 @@ import type {
 
 import {
   setUserRolesControllerUpdateUserV1,
-  viewMeControllerViewMeV1,
   viewUserControllerViewUserV1,
   viewUsersControllerViewUserV1,
 } from '@/client'
 import type { RoleUuid } from '@/models/setting-role/roleUuid.model.ts'
-import type { UserDetail } from '@/models/user/detail/user.model'
+import type { UserDetail } from '@/models/user/detail/userDetail.model'
 import type { UserIndex } from '@/models/user/index/userIndex.model'
 import type { UserIndexFilters } from '@/models/user/index/userIndexFilters.model'
 import {
@@ -41,12 +40,6 @@ export class UserService {
         uuid: userUuid,
       },
     })
-
-    return UserTransformer.fromDto(response.data)
-  }
-
-  static async getMe(): Promise<UserDetail> {
-    const response = await viewMeControllerViewMeV1()
 
     return UserTransformer.fromDto(response.data)
   }

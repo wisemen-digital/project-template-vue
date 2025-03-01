@@ -7,7 +7,7 @@ import { Permission } from '@/client'
 import AppEditItemButton from '@/components/app/button/AppEditItemButton.vue'
 import AppPage from '@/components/layout/AppPage.vue'
 import { TEST_ID } from '@/constants/testId.constant.ts'
-import type { UserDetail } from '@/models/user/detail/user.model'
+import type { UserDetail } from '@/models/user/detail/userDetail.model'
 import { useAuthStore } from '@/stores/auth.store.ts'
 
 const props = defineProps<{
@@ -26,7 +26,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     type: 'route',
   },
   {
-    label: props.user.fullName ?? '-',
+    label: props.user.email,
     type: 'page',
   },
 ]
@@ -36,7 +36,7 @@ const isEditButtonVisible = computed<boolean>(() => authStore.hasPermission(Perm
 
 <template>
   <AppPage
-    :title="props.user.fullName ?? '-'"
+    :title="props.user.email"
     :breadcrumbs="breadcrumbs"
   >
     <template #header-actions>

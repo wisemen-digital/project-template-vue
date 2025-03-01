@@ -28,7 +28,9 @@ export const zRoleResponse = z.object({
     createdAt: z.string().datetime(),
     updatedAt: z.string().datetime(),
     name: z.string(),
-    permissions: z.array(zPermission)
+    permissions: z.array(zPermission),
+    isDefault: z.boolean(),
+    isSystemAdmin: z.boolean()
 });
 
 export const zViewMeResponse = z.object({
@@ -96,27 +98,27 @@ export const zCreateRoleCommand = z.object({
     name: z.string()
 });
 
-export const zPermissionObject = z.object({
-    id: z.string(),
-    actions: z.array(z.string())
-});
-
-export const zUpdateRolesBulkRoleCommand = z.object({
-    uuid: z.string(),
-    name: z.string(),
-    permissions: z.array(zPermissionObject)
-});
-
-export const zUpdateRolesBulkCommand = z.object({
-    roles: z.array(zUpdateRolesBulkRoleCommand)
-});
-
 export const zUpdateRoleCommand = z.object({
     name: z.string()
 });
 
 export const zViewRoleIndexResponse = z.object({
     items: z.array(zRoleResponse)
+});
+
+export const zRoleNotFoundError = z.object({
+    detail: z.string().optional(),
+    status: z.string(),
+    code: z.string()
+});
+
+export const zUpdateRolesPermissionsCommandItem = z.object({
+    roleUuid: z.string().uuid(),
+    permissions: z.array(zPermission)
+});
+
+export const zUpdateRolesPermissionsCommand = z.object({
+    roles: z.array(zUpdateRolesPermissionsCommandItem)
 });
 
 export const zMimeType = z.enum([
@@ -307,6 +309,8 @@ export const zViewUserControllerViewUserV1Response = zViewUserResponse;
 export const zViewUsersControllerViewUserV1Response = zViewUsersResponse;
 
 export const zViewRolesControllerGetRolesV1Response = zViewRoleIndexResponse;
+
+export const zUpdateRolesPermissionsControllerUpdateRolePermissionsV1Response = z.void();
 
 export const zViewRoleControllerGetRoleV1Response = zRoleResponse;
 

@@ -17,11 +17,11 @@ import FormLayout from '@/components/form/FormLayout.vue'
 import FormSubmitButton from '@/components/form/FormSubmitButton.vue'
 import { useApiErrorToast } from '@/composables/api-error-toast/apiErrorToast.composable.ts'
 import { TEST_ID } from '@/constants/testId.constant.ts'
-import { toFormField } from '@/helpers/formango.helper.ts'
 import { type RoleUuid, roleUuidSchema } from '@/models/setting-role/roleUuid.model.ts'
-import type { UserDetail } from '@/models/user/detail/user.model.ts'
+import type { UserDetail } from '@/models/user/detail/userDetail.model.ts'
 import { useSettingRolesQuery } from '@/modules/settings/api/queries/settingRole.query.ts'
 import { useUserUpdateRoleMutation } from '@/modules/user/api/mutations/userUpdate.mutation.ts'
+import { toFormField } from '@/utils/formango.util'
 
 const props = defineProps<{
   user: UserDetail

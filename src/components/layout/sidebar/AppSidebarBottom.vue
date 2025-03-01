@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppSeparator from '@/components/app/AppSeparator.vue'
 import AppSidebarUserProfile from '@/components/layout/sidebar/AppSidebarUserProfile.vue'
-import type { UserDetail } from '@/models/user/detail/user.model.ts'
+import type { UserDetail } from '@/models/user/detail/userDetail.model.ts'
 
 const props = defineProps<{
   isCollapsed: boolean

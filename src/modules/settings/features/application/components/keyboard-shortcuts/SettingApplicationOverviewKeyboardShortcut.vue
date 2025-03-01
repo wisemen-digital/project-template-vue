@@ -4,6 +4,10 @@ import {
   VcKeyboardShortcut,
   VcSwitch,
 } from '@wisemen/vue-core'
+import {
+  AnimatePresence,
+  Motion,
+} from 'motion-v'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -63,22 +67,26 @@ function onUpdateModelValue(newValue: boolean): void {
         @update:model-value="onUpdateModelValue"
       />
 
-      <VcButton
-        variant="secondary"
-        size="sm"
-      >
-        <AppGroup>
-          <span>
-            {{ i18n.t('module.setting.keyboard_shortcuts.example_button') }}
-          </span>
+      <Motion :as-child="true">
+        <VcButton
+          variant="secondary"
+          size="sm"
+        >
+          <AppGroup>
+            <span>
+              {{ i18n.t('module.setting.keyboard_shortcuts.example_button') }}
+            </span>
 
-          <VcKeyboardShortcut
-            v-if="computedValue && isKeyboardShortcutHintVisible"
-            :keyboard-keys="['meta', 'k']"
-            keyboard-classes="border-0 bg-tertiary"
-          />
-        </AppGroup>
-      </VcButton>
+            <AnimatePresence>
+              <VcKeyboardShortcut
+                v-if="computedValue && isKeyboardShortcutHintVisible"
+                :keyboard-keys="['meta', 'k']"
+                keyboard-classes="border-0 bg-tertiary"
+              />
+            </AnimatePresence>
+          </AppGroup>
+        </VcButton>
+      </Motion>
     </AppGroup>
   </FormFieldset>
 </template>

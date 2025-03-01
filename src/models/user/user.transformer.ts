@@ -1,12 +1,10 @@
 import type { RoleUuid } from '@/models/setting-role/roleUuid.model.ts'
+import type { UserDetail } from '@/models/user/detail/userDetail.model'
+import type { UserDetailDto } from '@/models/user/detail/userDetailDto.model'
 import type { UserIndexFilters } from '@/models/user/index/userIndexFilters.model'
 import type { UserIndexFiltersDto } from '@/models/user/index/userIndexFiltersDto.model'
 import type { UserUuid } from '@/models/user/userUuid.model.ts'
 
-import type { UserCreateDto } from './create/userCreateDto.model'
-import type { UserCreateForm } from './create/userCreateForm.model'
-import type { UserDetail } from './detail/user.model'
-import type { UserDetailDto } from './detail/userDto.model'
 import type { UserIndex } from './index/userIndex.model'
 import type { UserIndexDto } from './index/userIndexDto.model'
 import type { UserUpdateDto } from './update/userUpdateDto.model'
@@ -18,7 +16,6 @@ export class UserIndexTransformer {
       uuid: dto.uuid as UserUuid,
       email: dto.email,
       firstName: dto.firstName,
-      fullName: `${dto.firstName} ${dto.lastName}`,
       lastName: dto.lastName,
     }
   }
@@ -38,22 +35,12 @@ export class UserTransformer {
       uuid: dto.uuid as UserUuid,
       email: dto.email,
       firstName: dto.firstName,
-      fullName: `${dto.firstName} ${dto.lastName}`,
       lastName: dto.lastName,
       permissions: dto.roles.flatMap((role) => role.permissions),
       roles: dto.roles.map((role) => ({
         uuid: role.uuid as RoleUuid,
         name: role.name,
       })),
-    }
-  }
-}
-
-export class UserCreateTransformer {
-  static toDto(form: UserCreateForm): UserCreateDto {
-    return {
-      firstName: form.firstName,
-      lastName: form.lastName,
     }
   }
 }

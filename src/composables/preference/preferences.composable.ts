@@ -57,7 +57,7 @@ export function usePreferences(): UsePreferenceReturnType {
     languageSelect.value.value = preferenceQuery.data.value.language ?? i18n.locale.value
     isKeyboardShortcutHintVisible.value = preferenceQuery.data.value.showShortcuts ?? false
     reduceMotionValue.value = preferenceQuery.data.value.reduceMotion ?? false
-    darkMode.value.value = preferenceQuery.data.value.theme ?? Theme.SYSTEM
+    darkMode.value = preferenceQuery.data.value.theme ?? Theme.SYSTEM
   })
 
   return {

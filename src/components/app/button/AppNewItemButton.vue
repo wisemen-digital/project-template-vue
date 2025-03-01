@@ -5,7 +5,6 @@ import {
 } from '@wisemen/vue-core'
 
 import AppButtonTooltip from '@/components/app/tooltip/AppButtonTooltip.vue'
-import { KEYBOARD_SHORTCUT } from '@/constants/keyboardShortcut.constant'
 import type { RouteLocationCurrent } from '@/types/global/vueRouter'
 
 const props = defineProps<{
@@ -27,7 +26,6 @@ const props = defineProps<{
     >
       <VcRouterLinkButton
         :to="props.to"
-        :keyboard-shortcut="KEYBOARD_SHORTCUT.NEW"
         icon-left="plus"
         size="sm"
       >

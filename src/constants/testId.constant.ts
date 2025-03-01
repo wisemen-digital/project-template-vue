@@ -32,10 +32,8 @@ export const TEST_ID = {
     OVERVIEW: {
       CREATE_BUTTON: 'users-overview-create-button',
       TABLE: {
-        BIRTH_DATE: 'users-overview-title-birth-date',
         CONTAINER: 'users-overview-table-container',
-        FULL_NAME: 'users-overview-title-full-name',
-        UUID: 'users-overview-title-uuid',
+        EMAIL: 'users-overview-table-email',
       },
       TITLE: 'users-overview-title',
     },

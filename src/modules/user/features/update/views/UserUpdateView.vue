@@ -3,7 +3,7 @@ import type { BreadcrumbItem } from '@wisemen/vue-core'
 import { useI18n } from 'vue-i18n'
 
 import FormPage from '@/components/form/FormPage.vue'
-import type { UserDetail } from '@/models/user/detail/user.model'
+import type { UserDetail } from '@/models/user/detail/userDetail.model'
 import UserUpdateRoleForm from '@/modules/user/features/update/components/UserUpdateRoleForm.vue'
 
 const props = defineProps<{
@@ -21,7 +21,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     type: 'route',
   },
   {
-    label: props.user.fullName ?? '-',
+    label: props.user.email,
     to: {
       name: 'user-detail',
       params: {
@@ -40,7 +40,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 <template>
   <FormPage
     :breadcrumbs="breadcrumbs"
-    :title="props.user.fullName ?? '-'"
+    :title="props.user.email"
   >
     <UserUpdateRoleForm :user="user" />
   </FormPage>

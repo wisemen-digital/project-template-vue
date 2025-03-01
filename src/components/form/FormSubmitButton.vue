@@ -8,8 +8,6 @@ import {
 } from 'vue'
 import type { z } from 'zod'
 
-import { KEYBOARD_SHORTCUT } from '@/constants/keyboardShortcut.constant'
-
 const props = withDefaults(defineProps<{
   formId?: string | null
   isAlwaysEnabled?: boolean
@@ -47,7 +45,6 @@ const isButtonDisabled = computed<boolean>(() => {
     :form="props.formId"
     :is-disabled="isButtonDisabled"
     :is-loading="props.form.isSubmitting.value"
-    :keyboard-shortcut="KEYBOARD_SHORTCUT.SAVE"
     type="submit"
     class="w-full"
     size="sm"

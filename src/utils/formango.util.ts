@@ -1,7 +1,7 @@
 import type { Field } from 'formango'
 
 export function toFormField<TValue, TDefaultValue>(field: Field<TValue, TDefaultValue>): {
-  'isTouched': boolean | undefined
+  'isTouched': boolean
   'errors': string[]
   'modelValue': TDefaultValue extends undefined ? TValue | null : TValue
   'onBlur': () => void

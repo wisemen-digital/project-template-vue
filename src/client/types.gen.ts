@@ -27,6 +27,8 @@ export type RoleResponse = {
     updatedAt: string;
     name: string;
     permissions: Array<Permission>;
+    isDefault: boolean;
+    isSystemAdmin: boolean;
 };
 
 export type ViewMeResponse = {
@@ -91,21 +93,6 @@ export type CreateRoleCommand = {
     name: string;
 };
 
-export type PermissionObject = {
-    id: string;
-    actions: Array<string>;
-};
-
-export type UpdateRolesBulkRoleCommand = {
-    uuid: string;
-    name: string;
-    permissions: Array<PermissionObject>;
-};
-
-export type UpdateRolesBulkCommand = {
-    roles: Array<UpdateRolesBulkRoleCommand>;
-};
-
 export type UpdateRoleCommand = {
     /**
      * The name of the role
@@ -115,6 +102,24 @@ export type UpdateRoleCommand = {
 
 export type ViewRoleIndexResponse = {
     items: Array<RoleResponse>;
+};
+
+export type RoleNotFoundError = {
+    /**
+     * a human-readable explanation specific to this occurrence of the problem
+     */
+    detail?: string;
+    status: string;
+    code: string;
+};
+
+export type UpdateRolesPermissionsCommandItem = {
+    roleUuid: string;
+    permissions: Array<Permission>;
+};
+
+export type UpdateRolesPermissionsCommand = {
+    roles: Array<UpdateRolesPermissionsCommandItem>;
 };
 
 export enum MimeType {
@@ -406,6 +411,27 @@ export type ViewRolesControllerGetRolesV1Responses = {
 
 export type ViewRolesControllerGetRolesV1Response = ViewRolesControllerGetRolesV1Responses[keyof ViewRolesControllerGetRolesV1Responses];
 
+export type UpdateRolesPermissionsControllerUpdateRolePermissionsV1Data = {
+    body: UpdateRolesPermissionsCommand;
+    path?: never;
+    query?: never;
+    url: '/api/v1/roles';
+};
+
+export type UpdateRolesPermissionsControllerUpdateRolePermissionsV1Errors = {
+    404: {
+        errors?: Array<RoleNotFoundError>;
+    };
+};
+
+export type UpdateRolesPermissionsControllerUpdateRolePermissionsV1Error = UpdateRolesPermissionsControllerUpdateRolePermissionsV1Errors[keyof UpdateRolesPermissionsControllerUpdateRolePermissionsV1Errors];
+
+export type UpdateRolesPermissionsControllerUpdateRolePermissionsV1Responses = {
+    204: void;
+};
+
+export type UpdateRolesPermissionsControllerUpdateRolePermissionsV1Response = UpdateRolesPermissionsControllerUpdateRolePermissionsV1Responses[keyof UpdateRolesPermissionsControllerUpdateRolePermissionsV1Responses];
+
 export type CreateRoleControllerCreateRoleV1Data = {
     body: CreateRoleCommand;
     path?: never;
@@ -458,17 +484,6 @@ export type UpdateRoleControllerUpdateRoleV1Data = {
 };
 
 export type UpdateRoleControllerUpdateRoleV1Responses = {
-    201: unknown;
-};
-
-export type UpdateRolesBulkControllerUpdateRolesBulkV1Data = {
-    body: UpdateRolesBulkCommand;
-    path?: never;
-    query?: never;
-    url: '/api/v1/roles/bulk';
-};
-
-export type UpdateRolesBulkControllerUpdateRolesBulkV1Responses = {
     201: unknown;
 };
 

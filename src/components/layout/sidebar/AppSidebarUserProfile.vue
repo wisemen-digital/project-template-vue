@@ -8,12 +8,14 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import AppSeparator from '@/components/app/AppSeparator.vue'
+import AppUnstyledButton from '@/components/app/button/AppUnstyledButton.vue'
 import {
   CURRENT_BUILD_NUMBER,
   CURRENT_ENVIRONMENT,
 } from '@/constants/environment.constant'
 import { TEST_ID } from '@/constants/testId.constant.ts'
-import type { UserDetail } from '@/models/user/detail/user.model.ts'
+import type { UserDetail } from '@/models/user/detail/userDetail.model.ts'
+import { UserUtil } from '@/models/user/user.util'
 
 const props = defineProps<{
   isCollapsed: boolean
@@ -57,9 +59,21 @@ const dropdownMenuItems = computed<DropdownMenuItem[]>(() => [
   },
 ])
 
-const userInitials = computed<string>(() => (
-  `${props.user?.firstName?.[0] ?? '-'}${props.user?.lastName?.[0] ?? ''}`
-))
+const fullName = computed<string | null>(() => {
+  if (props.user === null) {
+    return null
+  }
+
+  return UserUtil.getFullName(props.user)
+})
+
+const userInitials = computed<string | null>(() => {
+  if (fullName.value === null) {
+    return null
+  }
+
+  return UserUtil.getInitials(fullName.value)
+})
 </script>
 
 <template>
@@ -74,7 +88,7 @@ const userInitials = computed<string>(() => (
     <template #content-top>
       <div class="min-w-56 pb-xs">
         <span class="block px-lg py-md text-sm text-primary">
-          {{ props.user?.fullName ?? '-' }}
+          {{ fullName ?? '-' }}
         </span>
 
         <AppSeparator />
@@ -94,10 +108,11 @@ const userInitials = computed<string>(() => (
     </template>
 
     <VcDropdownMenuTrigger>
-      <button
+      <AppUnstyledButton
         :data-test-id="TEST_ID.APP_PAGE.USER_BUTTON"
+        :aria-label="i18n.t('component.sidebar.footer.user_profile')"
         type="button"
-        class="flex w-full items-center gap-x-xl rounded-full text-left outline-none ring-brand-primary-500 ring-offset-1 duration-200 focus-visible:ring-2"
+        class="flex w-full items-center gap-x-xl rounded-full text-left outline-none ring-brand-primary-500"
       >
         <div
           :style="{
@@ -106,7 +121,7 @@ const userInitials = computed<string>(() => (
           class="flex aspect-square items-center justify-center rounded-full bg-quaternary"
         >
           <span class="text-sm font-medium text-primary">
-            {{ userInitials }}
+            {{ userInitials ?? '?' }}
           </span>
         </div>
 
@@ -128,7 +143,7 @@ const userInitials = computed<string>(() => (
               class="absolute top-1/2 flex w-full -translate-y-1/2 flex-col items-start overflow-hidden"
             >
               <span class="w-full truncate text-left text-sm font-semibold text-primary">
-                {{ props.user.fullName ?? '-' }}
+                {{ fullName ?? '-' }}
               </span>
 
               <span class="w-full truncate text-sm text-secondary">
@@ -137,7 +152,7 @@ const userInitials = computed<string>(() => (
             </div>
           </Transition>
         </div>
-      </button>
+      </AppUnstyledButton>
     </VcDropdownMenuTrigger>
   </VcDropdownMenu>
 </template>
